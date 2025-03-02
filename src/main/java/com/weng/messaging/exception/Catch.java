@@ -12,10 +12,10 @@ import org.springframework.http.HttpStatus;
 @JsonIgnoreProperties({"cause", "stackTrace", "localizedMessage", "suppressed"})
 public class Catch extends RuntimeException {
 
-    private Code code;
+    private final Code code;
 
     @JsonIgnore
-    private HttpStatus httpStatus;
+    private final HttpStatus httpStatus;
 
     public Catch(HttpStatus httpStatus, Code code, Msg msg, Object... args) {
         this(httpStatus, code, msg.name(), args);

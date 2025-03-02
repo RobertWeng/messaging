@@ -7,7 +7,9 @@ import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -25,11 +27,15 @@ import java.util.Locale;
 public class User extends BaseEntity {
 
     public enum Role {
-        USER, ADMIN
+        USER, ADMIN // Temporary no ADMIN role
     }
 
-    public enum Status {
+    public enum AccountStatus {
         ACTIVE, BLOCKED
+    }
+
+    public enum OnlineStatus {
+        ACTIVE, OFFLINE, BUSY
     }
 
     @Column(nullable = false)
@@ -50,7 +56,11 @@ public class User extends BaseEntity {
 
     @Column(length = 20)
     @Enumerated(EnumType.STRING)
-    private Status status = Status.ACTIVE;
+    private AccountStatus accountStatus = AccountStatus.ACTIVE;
+
+    @Column(length = 20)
+    @Enumerated(EnumType.STRING)
+    private OnlineStatus onlineStatus;
 
     private LocalDateTime accountBlockedUntil;
 
@@ -58,5 +68,6 @@ public class User extends BaseEntity {
 
     private LocalDate dateOfBirth;
 
-    public static
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "user")
+    private Set<Passport> passports = new HashSet<>();
 }
