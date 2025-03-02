@@ -1,0 +1,26 @@
+spring:
+  profiles.active: default
+  application.name: messaging
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/messaging}
+    username: root
+    password: password
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+jwt:
+  token:
+    secret: 8f821a74-367b-4741-95b6-fdfad9b44705
+    accessTokenExpInMinute: 43800
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
+  allowed-headers: "*"
