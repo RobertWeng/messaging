@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Locale;
@@ -66,8 +65,14 @@ public class User extends BaseEntity {
 
     private Locale locale = Locale.ENGLISH;
 
-    private LocalDate dateOfBirth;
-
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "user")
     private Set<Passport> passports = new HashSet<>();
+
+    public void addPassport(Passport passport) {
+        this.passports.add(passport);
+    }
+
+    public void addPassport(Set<Passport> passports) {
+        this.passports.addAll(passports);
+    }
 }

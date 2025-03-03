@@ -42,8 +42,4 @@ public class Catch extends RuntimeException {
     public static Catch internalServerError(String message, Object... args) {
         return new Catch(HttpStatus.INTERNAL_SERVER_ERROR, Code.INTERNAL_SERVER_ERROR, message, args);
     }
-
-    public static Catch wsConnectFailed() {
-        return new Catch(HttpStatus.BAD_REQUEST, Code.WS_CONNECT_FAILED, Msg.WS_CONNECT_FAILED);
-    }
 }
