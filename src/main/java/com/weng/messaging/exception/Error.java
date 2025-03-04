@@ -14,6 +14,7 @@ public class Error {
         INTERNAL_SERVER_ERROR,
         INVALID_STATE,
         ACCOUNT_BLOCKED,
-        INVALID_CREDENTIAL
+        INVALID_CREDENTIAL,
+        USER_EXISTED
     }
 }

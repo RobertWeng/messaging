@@ -2,13 +2,13 @@ package com.weng.messaging.service;
 
 import com.weng.messaging.exception.Catch;
 import com.weng.messaging.exception.Error;
+import com.weng.messaging.mapper.UserMapper;
 import com.weng.messaging.model.dto.request.CreateUserReq;
 import com.weng.messaging.model.dto.request.LoginReq;
 import com.weng.messaging.model.dto.response.LoginRes;
 import com.weng.messaging.model.entity.Passport;
 import com.weng.messaging.model.entity.User;
 import com.weng.messaging.repo.PassportRepo;
-import com.weng.messaging.repo.UserRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,17 +32,16 @@ public class AuthService {
 
     public LoginRes register(CreateUserReq req) {
         User user = userService.createUser(req.getName(), req.getEmail(), req.getMobileNo(), req.getPassword(), User.Role.USER);
-        return userMapper.toAdminLoginRes(user, adminUser, otpId);
+        return userMapper.toLoginRes(user);
     }
 
     public LoginRes login(LoginReq req) {
-        User user = loginByUsernameAndPasswordAndRole(req.getClientType(), req.getUsername(), req.getPassword());
-        return userMapper.toAdminLoginRes(user, adminUser, otpId);
+        User user = loginByClientTypeAndId(req.getClientType(), req.getClientId(), req.getPassword());
+        return userMapper.toLoginRes(user);
     }
 
-    private User loginByUsernameAndPasswordAndRole(Passport.ClientType clientType, String username,
-                                                   String password) {
-        Passport passport = passportRepo.findByClientTypeAndClientId(clientType, username).orElseThrow(() -> Catch.invalidRequest(Error.Msg.INVALID_CREDENTIAL))
+    private User loginByClientTypeAndId(Passport.ClientType clientType, String username, String password) {
+        Passport passport = passportRepo.findByClientTypeAndClientId(clientType, username).orElseThrow(() -> Catch.invalidRequest(Error.Msg.INVALID_CREDENTIAL));
         User user = passport.getUser();
         verifyUser(user);
         if (!passwordEncoder.matches(password, passport.getPassword())) {

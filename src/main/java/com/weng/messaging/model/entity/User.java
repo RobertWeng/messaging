@@ -1,7 +1,10 @@
 package com.weng.messaging.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -14,7 +17,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "t_user", indexes = {
         @Index(name = "t_user_deleted_idx", columnList = "deleted"),
@@ -46,9 +48,6 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String mobileNo;
 
-    @Column(nullable = false)
-    private String password;
-
     @Column(length = 20)
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -59,7 +58,7 @@ public class User extends BaseEntity {
 
     @Column(length = 20)
     @Enumerated(EnumType.STRING)
-    private OnlineStatus onlineStatus;
+    private OnlineStatus onlineStatus = OnlineStatus.OFFLINE;
 
     private LocalDateTime accountBlockedUntil;
 

@@ -24,3 +24,5 @@ cors:
   allowed-origins: "*"
   allowed-methods: "*"
   allowed-headers: "*"
+security:
+  csp: "default-src 'self' ; frame-ancestors 'none'"

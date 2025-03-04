@@ -1,6 +1,6 @@
 package com.weng.messaging.config;
 
-import com.weng.weather.controller.LocationController;
+import com.weng.messaging.controller.app.AuthController;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.servers.Server;
 import org.springdoc.core.models.GroupedOpenApi;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfig {
     @Bean
     public GroupedOpenApi userApi() {
-        String[] packagesToScan = {LocationController.class.getPackageName()};
+        String[] packagesToScan = {AuthController.class.getPackageName()};
         return GroupedOpenApi.builder().group("User")
                 .packagesToScan(packagesToScan)
                 .build();

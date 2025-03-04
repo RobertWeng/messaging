@@ -10,7 +10,7 @@ public class LoginReq {
 
     @NotBlank
     @Schema(defaultValue = "example-user@mail.com")
-    private String username;
+    private String clientId;
 
     @NotBlank
     @Schema(defaultValue = "123Qwe!!")

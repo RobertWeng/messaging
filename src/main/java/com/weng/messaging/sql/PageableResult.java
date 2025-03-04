@@ -1,6 +1,5 @@
 package com.weng.messaging.sql;
 
-import com.agmo.cbm.model.dto.response.ResultList;
 import lombok.Getter;
 
 import java.util.List;

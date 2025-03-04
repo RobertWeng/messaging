@@ -22,13 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     @Autowired
     private AuthService authService;
-    @Autowired
-    private UserMapper userMapper;
 
     @Operation(summary = "Register User Account", description = "This API is used to register user account")
     @PostMapping("/register")
     public ResponseEntity<LoginRes> register(@Valid @RequestBody CreateUserReq req) {
-        return ResponseEntity.ok(authService.register());
+        return ResponseEntity.ok(authService.register(req));
     }
 
     @Operation(summary = "Login", description = "This API is used to login user account")

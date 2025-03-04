@@ -1,11 +1,13 @@
 package com.weng.messaging.security;
 
 import com.weng.messaging.model.entity.User;
+import com.weng.messaging.service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,9 @@ public class JwtService {
     private final static String ISSUER = "WENG_USER_SERVICE";
     private final static String CLAIM_USAGE = "usage";
     private final static String USAGE_ACCESS_TOKEN = "access_token";
+
+    @Autowired
+    private UserService userService;
 
     @Value("${jwt.token.secret}")
     private String secret;
@@ -52,7 +57,7 @@ public class JwtService {
                     .getSubject();
 
             // TODO: userId Validation
-            return Long.parseLong(userId);
+            return userService.findById(Long.parseLong(userId));
         } catch (ExpiredJwtException e) {
             log.info("Token expired: {}", e.getMessage());
         } catch (Exception e) {

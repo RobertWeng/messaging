@@ -31,8 +31,8 @@ public class SecurityConfig {
         return httpSecurity
                 .headers(headers -> headers.contentSecurityPolicy(contentSecurityPolicyConfig -> contentSecurityPolicyConfig.policyDirectives(csp)))
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF if you are using stateless JWT
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Disable session creation
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Disable session creation
                 ).build();
     }
 

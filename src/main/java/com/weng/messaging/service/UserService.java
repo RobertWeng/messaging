@@ -1,5 +1,7 @@
 package com.weng.messaging.service;
 
+import com.weng.messaging.exception.Catch;
+import com.weng.messaging.exception.Error;
 import com.weng.messaging.model.entity.Passport;
 import com.weng.messaging.model.entity.User;
 import com.weng.messaging.repo.UserRepo;
@@ -20,7 +22,12 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public User findById(Long id) {
+        return userRepo.findById(id).orElseThrow(() -> Catch.invalidRequest(Error.Msg.INVALID_CREDENTIAL));
+    }
+
     public User createUser(String name, String email, String mobileNo, String password, User.Role role) {
+        verifyBeforeInsert(email, mobileNo);
         User user = new User();
         user.setName(name);
         user.setEmail(email);
@@ -41,6 +48,11 @@ public class UserService {
         passport.setPassword(passwordEncoder.encode(password));
         passport.setVerified(true);
         return passport;
+    }
+
+    private void verifyBeforeInsert(String email, String mobileNo) {
+        if (userRepo.existsByEmail(email)) throw Catch.invalidRequest(Error.Msg.USER_EXISTED);
+        if (userRepo.existsByMobileNo(mobileNo)) throw Catch.invalidRequest(Error.Msg.USER_EXISTED);
     }
 
 }
