@@ -19,7 +19,8 @@ springdoc:
 jwt:
   token:
     secret: 8f821a74-367b-4741-95b6-fdfad9b44705
-    accessTokenExpInMinute: 43800
+    accessTokenExpInMinute: 30
+    refreshTokenExpInMinute: 1440
 cors:
   allowed-origins: "*"
   allowed-methods: "*"

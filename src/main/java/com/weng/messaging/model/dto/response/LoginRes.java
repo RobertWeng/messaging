@@ -7,4 +7,5 @@ import lombok.Setter;
 @Setter
 public class LoginRes extends UserRes {
     private String accessToken;
+    private String refreshToken;
 }

@@ -7,6 +7,7 @@ public class Error {
         INVALID_REQUEST,
         INVALID_STATE,
         INTERNAL_SERVER_ERROR,
+        FORBIDDEN
     }
 
     public enum Msg {
@@ -15,6 +16,7 @@ public class Error {
         INVALID_STATE,
         ACCOUNT_BLOCKED,
         INVALID_CREDENTIAL,
-        USER_EXISTED
+        USER_EXISTED,
+        FORBIDDEN
     }
 }

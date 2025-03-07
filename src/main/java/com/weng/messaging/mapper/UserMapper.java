@@ -17,6 +17,7 @@ public abstract class UserMapper {
     abstract UserRes toUserSimpleRes(User user);
 
     @Mapping(target = "accessToken", ignore = true)
+    @Mapping(target = "refreshToken", ignore = true)
     abstract LoginRes toLoginSimpleRes(User user);
 
     public UserRes toUserRes(User data) {
@@ -26,6 +27,7 @@ public abstract class UserMapper {
     public LoginRes toLoginRes(User data) {
         LoginRes res = toLoginSimpleRes(data);
         res.setAccessToken(jwtService.generateAccessToken(data));
+        res.setRefreshToken(jwtService.generateRefreshToken(data));
         return res;
     }
 }

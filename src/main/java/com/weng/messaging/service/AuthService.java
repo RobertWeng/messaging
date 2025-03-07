@@ -5,10 +5,12 @@ import com.weng.messaging.exception.Error;
 import com.weng.messaging.mapper.UserMapper;
 import com.weng.messaging.model.dto.request.CreateUserReq;
 import com.weng.messaging.model.dto.request.LoginReq;
+import com.weng.messaging.model.dto.request.RefreshAccessTokenReq;
 import com.weng.messaging.model.dto.response.LoginRes;
 import com.weng.messaging.model.entity.Passport;
 import com.weng.messaging.model.entity.User;
 import com.weng.messaging.repo.PassportRepo;
+import com.weng.messaging.security.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +32,9 @@ public class AuthService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtService jwtService;
+
     public LoginRes register(CreateUserReq req) {
         User user = userService.createUser(req.getName(), req.getEmail(), req.getMobileNo(), req.getPassword(), User.Role.USER);
         return userMapper.toLoginRes(user);
@@ -37,6 +42,13 @@ public class AuthService {
 
     public LoginRes login(LoginReq req) {
         User user = loginByClientTypeAndId(req.getClientType(), req.getClientId(), req.getPassword());
+        return userMapper.toLoginRes(user);
+    }
+
+    public LoginRes refreshAccessToken(RefreshAccessTokenReq req) {
+        User user = jwtService.verifyRefreshToken(req.getRefreshToken());
+        if (user == null)
+            throw Catch.forbidden();
         return userMapper.toLoginRes(user);
     }
 

@@ -42,4 +42,9 @@ public class Catch extends RuntimeException {
     public static Catch internalServerError(String message, Object... args) {
         return new Catch(HttpStatus.INTERNAL_SERVER_ERROR, Code.INTERNAL_SERVER_ERROR, message, args);
     }
+
+    public static Catch forbidden() {
+        return new Catch(HttpStatus.FORBIDDEN, Code.FORBIDDEN, Error.Msg.FORBIDDEN);
+    }
+    
 }
