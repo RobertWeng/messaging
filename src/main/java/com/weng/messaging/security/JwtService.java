@@ -76,7 +76,7 @@ public class JwtService {
                 .subject(String.valueOf(user.getId()))
                 .issuedAt(new Date())
                 .expiration(addMinutes(new Date(), jwtConfig.getAccessTokenExpInMinute()))
-                .signWith(Keys.hmacShaKeyFor(jwtConfig.getSecret().getBytes()))
+                .signWith(secretKey)
                 .claim(CLAIM_USAGE, USAGE_ACCESS_TOKEN)
                 .compact();
     }
@@ -88,7 +88,7 @@ public class JwtService {
                 .subject(String.valueOf(user.getId()))
                 .issuedAt(new Date())
                 .expiration(addMinutes(new Date(), jwtConfig.getRefreshTokenExpInMinute()))
-                .signWith(Keys.hmacShaKeyFor(jwtConfig.getSecret().getBytes()))
+                .signWith(secretKey)
                 .claim(CLAIM_USAGE, USAGE_REFRESH_TOKEN)
                 .compact();
     }

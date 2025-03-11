@@ -47,8 +47,7 @@ public class AuthService {
 
     public LoginRes refreshAccessToken(RefreshAccessTokenReq req) {
         User user = jwtService.verifyRefreshToken(req.getRefreshToken());
-        if (user == null)
-            throw Catch.forbidden();
+        if (user == null) throw Catch.forbidden();
         return userMapper.toLoginRes(user);
     }
 
