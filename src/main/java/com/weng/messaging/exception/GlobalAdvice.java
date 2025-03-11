@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -43,5 +44,10 @@ public class GlobalAdvice {
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<Catch> handleNoHandlerFoundException(HttpServletRequest req, NoHandlerFoundException e) {
         return handleCatch(req, new Catch(HttpStatus.NOT_FOUND, Code.NOT_FOUND, e.getMessage()));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Catch> handleAccessDeniedException(HttpServletRequest req, Exception e) {
+        return handleCatch(req, new Catch(HttpStatus.FORBIDDEN, Code.FORBIDDEN, Error.Msg.FORBIDDEN));
     }
 }

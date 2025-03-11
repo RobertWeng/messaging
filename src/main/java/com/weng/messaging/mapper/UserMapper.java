@@ -7,11 +7,13 @@ import com.weng.messaging.security.JwtService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 @Mapper(componentModel = "spring")
 public abstract class UserMapper {
 
     @Autowired
+    @Lazy
     private JwtService jwtService;
 
     abstract UserRes toUserSimpleRes(User user);

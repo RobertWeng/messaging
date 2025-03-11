@@ -2,9 +2,12 @@ package com.weng.messaging.service;
 
 import com.weng.messaging.exception.Catch;
 import com.weng.messaging.exception.Error;
+import com.weng.messaging.mapper.UserMapper;
+import com.weng.messaging.model.dto.response.UserRes;
 import com.weng.messaging.model.entity.Passport;
 import com.weng.messaging.model.entity.User;
 import com.weng.messaging.repo.UserRepo;
+import com.weng.messaging.security.SecurityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,8 +25,19 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private SecurityService securityService;
+
+    @Autowired
+    private UserMapper userMapper;
+
     public User findById(Long id) {
         return userRepo.findById(id).orElseThrow(() -> Catch.invalidRequest(Error.Msg.INVALID_CREDENTIAL));
+    }
+
+    public UserRes findMe() {
+        User user = securityService.findMe();
+        return userMapper.toUserRes(user);
     }
 
     public User createUser(String name, String email, String mobileNo, String password, User.Role role) {

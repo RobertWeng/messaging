@@ -9,7 +9,7 @@ import lombok.Data;
 public class LoginReq {
 
     @NotBlank
-    @Schema(defaultValue = "example-user@mail.com")
+    @Schema(defaultValue = "robertlee1@mail.com")
     private String clientId;
 
     @NotBlank
